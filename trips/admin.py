@@ -1,3 +1,34 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 
-# Register your models here.
+from .models import User, Trip
+
+
+@admin.register(User)
+class UserAdmin(DefaultUserAdmin):
+    pass
+
+
+@admin.register(Trip)
+class TripAdmin(admin.ModelAdmin):
+    fields = (
+        "id",
+        "created",
+        "updated",
+        "pick_up_address",
+        "drop_off_address",
+        "status",
+    )
+
+    list_display = (
+        "id",
+        "created",
+        "updated",
+        "pick_up_address",
+        "drop_off_address",
+        "status",
+    )
+
+    list_filter = ("status",)
+
+    readonly_fields = ("id", "created", "updated")
