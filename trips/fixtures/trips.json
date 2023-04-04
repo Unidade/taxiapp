@@ -1,0 +1,13 @@
+[
+  {
+    "model": "trips.trip",
+    "pk": "56e456fa-7bed-49b0-b3af-69c6a796234b",
+    "fields": {
+      "created": "2023-04-04T00:23:21.301Z",
+      "updated": "2023-04-04T00:23:21.301Z",
+      "pick_up_address": "A",
+      "drop_off_address": "B",
+      "status": "requested"
+    }
+  }
+]

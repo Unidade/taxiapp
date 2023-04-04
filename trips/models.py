@@ -28,7 +28,7 @@ class Trip(models.Model):
     status = models.CharField(max_length=20, choices=STATUSES, default=REQUESTED)
 
     def __str__(self):
-        return f"{self:id}: {self.pick_up_address} to {self.drop_off_address}"
+        return f"{self.id}: {self.pick_up_address} to {self.drop_off_address}"
 
     def get_absolute_url(self):
-        return reverse("trip:trip_detail", kwargs={"trip_id": self.id})
+        return reverse("trips:trip_detail", kwargs={"trip_id": self.id})

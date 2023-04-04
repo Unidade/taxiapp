@@ -24,5 +24,5 @@ urlpatterns = [
     path("api/signup/", SignUpView.as_view(), name="signup"),
     path("api/login/", LogInView.as_view(), name="login"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/trip/", include(("trips.urls", "trip"))),
+    path("api/trip/", include(("trips.urls", "trips"))),
 ]

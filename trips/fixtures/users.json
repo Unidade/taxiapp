@@ -1,0 +1,56 @@
+[
+  {
+    "model": "trips.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$390000$a829ufjRVyX4XwoGtGLDXD$SOHDTUtRA855wQSp+sds5lwdBK9BIlLg/LOkN/Wl05w=",
+      "last_login": "2023-04-03T20:33:14.546Z",
+      "is_superuser": true,
+      "username": "uber",
+      "first_name": "",
+      "last_name": "",
+      "email": "uber@email.co",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-04-03T03:25:49.500Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "trips.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$390000$0LYn2C0N2nCaSCa67urIwq$wrFbU0RzX34VWRSqU7O4oreUP5JFXmoIc6forjKDnkM=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "asc",
+      "first_name": "asc",
+      "last_name": "asc",
+      "email": "a@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-04-03T18:04:27.716Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "trips.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$390000$utOG7J4qj2T9nZPoTGAI4b$OHpQWTU7c9HOEG3CpVzXJjMIqzBdqCfF03Cwhw3YhuU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "asc1",
+      "first_name": "asc",
+      "last_name": "asc",
+      "email": "a@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-04-03T18:06:02.996Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

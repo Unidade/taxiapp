@@ -11,7 +11,7 @@ from rest_framework.test import APITestCase, APITransactionTestCase
 from trips.serializers import TripSerializer, UserSerializer
 from trips.models import Trip
 
-PASSWORD = "Pza135&zaapq21"
+PASSWORD = "buch4spu"  # default password for all users
 
 DUMMY_USER_DATA_SIGNUP = {
     "username": "testUser123",
@@ -23,21 +23,11 @@ DUMMY_USER_DATA_SIGNUP = {
 }
 
 
-def create_user(**kwargs: str):
-    user_data: dict[str, str] = {**DUMMY_USER_DATA_SIGNUP, **kwargs}
-    user_data["password"] = kwargs.get("password", PASSWORD)
-    return get_user_model().objects.create_user(
-        username=user_data["username"],
-        email=user_data["email"],
-        first_name=user_data["first_name"],
-        last_name=user_data["last_name"],
-        password=user_data["password"],
-    )
-
-
 class AuthenticationTest(APITestCase):
+    fixtures = ["users.json", "trips.json"]
+
     def setUp(self):
-        self.user = create_user(username="setUpUser", email="setUp@email.com")
+        self.user = get_user_model().objects.get(username="asc")
         response = self.client.post(
             reverse("login"),
             data={
@@ -61,11 +51,10 @@ class AuthenticationTest(APITestCase):
         self.assertEqual(response.data["last_name"], user.last_name)
 
     def test_user_cannot_sign_up_with_existing_username(self):
-        user = create_user(username="BatataDoce")
         response = self.client.post(
             reverse("signup"),
             data={
-                "username": user.username,
+                "username": self.user.username,
                 "email": f"{random() * 25}@test.com",
                 "first_name": "Batata",
                 "last_name": "Doce",
@@ -76,11 +65,10 @@ class AuthenticationTest(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_user_can_login(self):
-        user = create_user()
         response = self.client.post(
             reverse("login"),
             data={
-                "username": user.username,
+                "username": self.user.username,
                 "password": PASSWORD,
             },
         )
@@ -92,24 +80,24 @@ class AuthenticationTest(APITestCase):
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertIsNotNone(response.data["refresh"])
-        self.assertEqual(payload_data["id"], user.id)
-        self.assertEqual(payload_data["username"], user.username)
-        self.assertEqual(payload_data["first_name"], user.first_name)
-        self.assertEqual(payload_data["last_name"], user.last_name)
+        self.assertEqual(payload_data["id"], self.user.id)
+        self.assertEqual(payload_data["username"], self.user.username)
+        self.assertEqual(payload_data["first_name"], self.user.first_name)
+        self.assertEqual(payload_data["last_name"], self.user.last_name)
 
     def test_user_can_list_trips(self):
-        trips = [
-            Trip.objects.create(pick_up_address="Rua 1", drop_off_address="Rua 2"),
-            Trip.objects.create(pick_up_address="Rua 2", drop_off_address="Rua 3"),
-        ]
+        Trip.objects.create(pick_up_address="Rua 1", drop_off_address="Rua 2")
+        Trip.objects.create(pick_up_address="Rua 2", drop_off_address="Rua 3")
 
         response = self.client.get(
-            reverse("trip:trip_list"),
+            reverse("trips:trip_list"),
             HTTP_AUTHORIZATION=f"Bearer {self.access}",
         )
 
         self.assertEqual(status.HTTP_200_OK, response.status_code)
-        exp_trips_ids = [str(trip.id) for trip in trips]
+        AllTrips = Trip.objects.all()
+
+        exp_trips_ids = [str(trip.id) for trip in AllTrips]
         act_trips_ids = [trip["id"] for trip in response.data]
         self.assertCountEqual(exp_trips_ids, act_trips_ids)
 
