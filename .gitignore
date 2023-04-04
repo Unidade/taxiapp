@@ -1,4 +1,7 @@
 .venv
+# env variables
 .env
 .env.*
 __pycache__
+# pytest
+.pytest_cache
